@@ -1,12 +1,12 @@
 {
   "name": "basketball-simulator",
-  "version": "1.0.0",
+  "version": "0.0.1-beta-1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/hello.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/hello.ts",
+    "start": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
