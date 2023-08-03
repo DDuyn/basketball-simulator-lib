@@ -5,6 +5,7 @@ import { PersonalInfo } from "./personal-info";
 import { PhysicalSkill } from "./physical-skill";
 
 export interface Player {
+  id: number;
   personalInfo: PersonalInfo;
   physicalSkill: PhysicalSkill;
   mentalSkill: MentalSkill;

@@ -1,7 +1,8 @@
 import { SETTINGS } from "../../../../../configuration";
-import { Player } from "../../../../simulator";
+import { Player } from "../../../../models";
 import { calculateCapacity } from "../../../general";
 
+//TODO: Adaptar al nuevo modelo
 export const standardDefenseTwoPointsShooting = (player: Player): number => {
   const defenseShootingTwoPointsRange =
     SETTINGS.DEFENSIVE.DEFENSE.RANGE_DEFENSE_SHOOTING_TWO_POINTS;
@@ -12,6 +13,8 @@ export const standardDefenseTwoPointsShooting = (player: Player): number => {
   );
 
   return Math.floor(
-    player.defenseTwoPoints * (player.stamina / 100) * (defenseCapacity / 100)
+    player.defensiveSkill.interiorDefense *
+      (player.physicalSkill.stamina / 100) *
+      (defenseCapacity / 100)
   );
 };
