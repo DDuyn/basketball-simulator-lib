@@ -1,3 +1,4 @@
+import { DATA } from "../../../data/data-simulator";
 import { generateProbabilityList, getRandomIndex } from "../../utils";
 import {
   calculateEffectiveShooting,
@@ -5,28 +6,7 @@ import {
   standardDefenseTwoPointsShooting,
   standardShootingTwoPoints,
 } from "../calculations";
-
-export type Player = {
-  name: string;
-  shootingTwoPoints: number;
-  defenseTwoPoints: number;
-  stamina: number;
-};
-
-const players: Player[] = [
-  {
-    name: "Lebron James",
-    shootingTwoPoints: 75,
-    defenseTwoPoints: 40,
-    stamina: 100,
-  },
-  {
-    name: "Kevin Durant",
-    shootingTwoPoints: 65,
-    defenseTwoPoints: 60,
-    stamina: 100,
-  },
-];
+import { Player } from "../models";
 
 const simulateTwoPointsAttempt = (attacker: Player, defender: Player) => {
   const shootingAbility = standardShootingTwoPoints(attacker);
@@ -42,10 +22,10 @@ const simulateTwoPointsAttempt = (attacker: Player, defender: Player) => {
   const shoot = slots[randomIndex];
 
   const info = {
-    name: attacker.name,
+    name: attacker.personalInfo.name,
     statsShooting: shootingAbility,
     statsDefense: defenseAbility,
-    stamina: attacker.stamina,
+    stamina: attacker.physicalSkill.stamina,
     probability: probability,
     shoot: shoot,
   };
@@ -56,7 +36,13 @@ const simulateTwoPointsAttempt = (attacker: Player, defender: Player) => {
 export const basketballSimulation = () => {
   console.log("Simulación iniciada");
   [...Array(10)].forEach(() => {
-    simulateTwoPointsAttempt(players[0], players[1]);
-    simulateTwoPointsAttempt(players[1], players[0]);
+    simulateTwoPointsAttempt(
+      DATA.teams[0].players[0],
+      DATA.teams[1].players[0]
+    );
+    simulateTwoPointsAttempt(
+      DATA.teams[1].players[1],
+      DATA.teams[0].players[1]
+    );
   });
 };

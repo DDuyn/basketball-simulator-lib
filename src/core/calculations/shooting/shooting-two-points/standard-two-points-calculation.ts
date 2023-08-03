@@ -1,7 +1,8 @@
 import { SETTINGS } from "../../../../configuration";
-import { Player } from "../../../simulator";
+import { Player } from "../../../models";
 import { calculateCapacity } from "../../general";
 
+//TODO: CAmbiar a MidRange, ShotRange y LargeRange
 export const standardShootingTwoPoints = (player: Player) => {
   const shootingTwoPointsRange =
     SETTINGS.OFFENSIVE.SHOOTING.RANGE_SHOOTING_TWO_POINT;
@@ -12,6 +13,8 @@ export const standardShootingTwoPoints = (player: Player) => {
   );
 
   return Math.floor(
-    player.shootingTwoPoints * (capacity / 100) * (player.stamina / 100)
+    player.offensiveSkill.outsideSkill.shortRangeShot *
+      (capacity / 100) *
+      (player.physicalSkill.stamina / 100)
   );
 };
