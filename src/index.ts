@@ -1,3 +1,1 @@
-import { basketballSimulation } from "./core/simulator";
-
-basketballSimulation();
+export { basketballSimulation } from "./core";

@@ -6,7 +6,8 @@
   "types": "dist/hello.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index .ts",
+    "start:dev": "npm run run-simulation",
+    "run-simulation": "ts-node scripts/run-simulator.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
