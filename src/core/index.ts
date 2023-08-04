@@ -1,1 +1,1 @@
-export * from "./calculations";
+export { basketballSimulation } from "./simulator";
