@@ -6,7 +6,7 @@ export const SETTINGS = {
         MAX: 1,
       },
     },
-    SHOOTING_ADJUSTAMENT: 1.05,
+    SHOOTING_ADJUSTAMENT: 1.25,
     // Otras configuraciones ofensivas...
   },
   DEFENSIVE: {
