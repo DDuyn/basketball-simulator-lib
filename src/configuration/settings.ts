@@ -1,3 +1,4 @@
+//TODO: Modificar rango de tiro por los definidos en el modelo
 export const SETTINGS = {
   OFFENSIVE: {
     SHOOTING: {
