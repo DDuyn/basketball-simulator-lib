@@ -1,2 +1,3 @@
+export * from "./game";
 export * from "./player";
-export * from "./team/team";
+export * from "./team";
