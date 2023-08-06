@@ -2,18 +2,21 @@ import { SimulationResult } from "../../constants";
 import { Team } from "../models";
 import { generateReport } from "./game-report";
 import {
-  addPointsToScore,
+  addPointsToPlayerScore,
+  addPointsToTeamScore,
   initializeGameState,
   pushGameEvent,
+  setPlayerPossession,
   setTeamPossession,
 } from "./game-state";
 import { shortRangeAttempt } from "./offensive/short-range-attempt";
-import { getRandomPlayer, isLocalTeam } from "./utils";
+import { getRandomPlayer, isHomeTeam } from "./utils";
 
-export const basketballSimulation = (localTeam: Team, awayTeam: Team) => {
-  const GAME_STATE = initializeGameState(localTeam, awayTeam);
+export const basketballSimulation = (homeTeam: Team, awayTeam: Team) => {
+  const GAME_STATE = initializeGameState(homeTeam, awayTeam);
 
   while (GAME_STATE.timeRemainingSeconds > 0) {
+    let playerPossession = GAME_STATE.ballPossession.player;
     const timeForAction = Math.floor(Math.random() * 24) + 1;
     GAME_STATE.timeRemainingSeconds -= timeForAction;
 
@@ -22,9 +25,9 @@ export const basketballSimulation = (localTeam: Team, awayTeam: Team) => {
         ? localPlayers
         : awayPlayers;*/
 
-    const defendingTeamPlayers = isLocalTeam(GAME_STATE.ballPossession.team)
+    const defendingTeamPlayers = isHomeTeam(GAME_STATE.ballPossession.team)
       ? GAME_STATE.info.awayTeam.players
-      : GAME_STATE.info.localTeam.players;
+      : GAME_STATE.info.homeTeam.players;
 
     //TODO: seleccionar el defensor más razonable por posición y situación del juego.
     const attackResult = shortRangeAttempt(
@@ -41,23 +44,20 @@ export const basketballSimulation = (localTeam: Team, awayTeam: Team) => {
     if (attackResult === SimulationResult.SUCCESS) {
       const points = 2; // Ajusta esto según sea necesario
 
-      addPointsToScore(GAME_STATE, points);
+      addPointsToTeamScore(GAME_STATE, points);
+      addPointsToPlayerScore(GAME_STATE, points);
 
-      const playerId = GAME_STATE.ballPossession.player.id;
-      if (!GAME_STATE.playerStats[playerId]) {
-        GAME_STATE.playerStats[playerId] = { points: 0 };
-      }
+      playerPossession = getRandomPlayer(defendingTeamPlayers);
+      setPlayerPossession(GAME_STATE, playerPossession);
 
-      GAME_STATE.playerStats[playerId].points += points;
-
-      GAME_STATE.ballPossession.player = getRandomPlayer(defendingTeamPlayers);
       setTeamPossession(GAME_STATE);
       pushGameEvent(
         GAME_STATE,
         `Jugador ${attackerName} lleva el balón y ${attackType}, anota.`
       );
     } else {
-      GAME_STATE.ballPossession.player = getRandomPlayer(defendingTeamPlayers);
+      playerPossession = getRandomPlayer(defendingTeamPlayers);
+      setPlayerPossession(GAME_STATE, playerPossession);
       setTeamPossession(GAME_STATE);
       pushGameEvent(
         GAME_STATE,
@@ -68,7 +68,7 @@ export const basketballSimulation = (localTeam: Team, awayTeam: Team) => {
     if (GAME_STATE.timeRemainingSeconds <= 0) break;
   }
 
-  generateReport(GAME_STATE, localTeam, awayTeam);
+  generateReport(GAME_STATE, homeTeam, awayTeam);
   const report = GAME_STATE.events.join("\n");
   console.log(report);
 };

@@ -3,13 +3,13 @@ import { Player } from "../player";
 import { PlayerStats } from "./player-stats";
 
 type TeamScores = {
-  localTeamScore: number;
+  homeTeamScore: number;
   awayTeamScore: number;
 };
 
 export interface GameState {
   info: {
-    localTeam: { name: string; players: Player[] };
+    homeTeam: { name: string; players: Player[] };
     awayTeam: { name: string; players: Player[] };
   };
   timeRemainingSeconds: number;

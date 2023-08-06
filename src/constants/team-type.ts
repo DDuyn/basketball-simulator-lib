@@ -1,4 +1,4 @@
 export enum TeamType {
-  LOCAL = "LOCAL",
+  HOME = "HOME",
   AWAY = "AWAY",
 }

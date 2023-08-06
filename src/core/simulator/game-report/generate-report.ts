@@ -2,14 +2,14 @@ import { GameState, Team } from "../../models";
 
 export const generateReport = (
   gameState: GameState,
-  localTeam: Team,
+  homeTeam: Team,
   awayTeam: Team
 ) => {
   console.log(
-    `Resultado final: ${localTeam.name} ${gameState.teamScores.localTeamScore} - ${awayTeam.name} ${gameState.teamScores.awayTeamScore}`
+    `Resultado final: ${homeTeam.name} ${gameState.teamScores.homeTeamScore} - ${awayTeam.name} ${gameState.teamScores.awayTeamScore}`
   );
 
-  for (const team of [localTeam, awayTeam]) {
+  for (const team of [homeTeam, awayTeam]) {
     console.log(`Estadísticas del equipo ${team.name}:`);
     // Aquí podrías imprimir estadísticas de equipo adicionales
 

@@ -1,34 +1,34 @@
 import { TeamType } from "../../../constants";
 import { GameState, Team } from "../../models";
-import { extractPlayers, getRandomPlayer, isLocalTeam } from "../utils";
+import { extractPlayers, getRandomPlayer, isHomeTeam } from "../utils";
 
 export const initializeGameState = (
-  localTeam: Team,
+  homeTeam: Team,
   awayTeam: Team
 ): GameState => {
-  const startingTeam = Math.random() < 0.5 ? TeamType.LOCAL : TeamType.AWAY;
-  const localTeamInfo = {
-    name: localTeam.name,
-    players: extractPlayers(localTeam),
+  const startingTeam = Math.random() < 0.5 ? TeamType.HOME : TeamType.AWAY;
+  const homeTeamInfo = {
+    name: homeTeam.name,
+    players: extractPlayers(homeTeam),
   };
   const awayTeamInfo = {
     name: awayTeam.name,
     players: extractPlayers(awayTeam),
   };
 
-  const startingPlayers = isLocalTeam(startingTeam)
-    ? localTeamInfo.players
+  const startingPlayers = isHomeTeam(startingTeam)
+    ? homeTeamInfo.players
     : awayTeamInfo.players;
 
   return {
     info: {
-      localTeam: localTeamInfo,
+      homeTeam: homeTeamInfo,
       awayTeam: awayTeamInfo,
     },
     timeRemainingSeconds: 720,
     playerStats: {},
     teamScores: {
-      localTeamScore: 0,
+      homeTeamScore: 0,
       awayTeamScore: 0,
     },
     ballPossession: {
